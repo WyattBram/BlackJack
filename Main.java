@@ -34,9 +34,7 @@ public class Main {
     public static void addToDealer(int i, Dealer d){
 
         for(int j = 0; j<i; j++){
-            if (deck.getCards().size() < i){
-                populate_deck();
-            }
+            checkDeck();
             Card c = deck.getCard();
             d.setCards_in_hand(c);
         }
@@ -45,9 +43,7 @@ public class Main {
     public static void addToPlayer(int i, Player p){
 
         for(int j = 0; j<i; j++){
-            if (deck.getCards().size() < i){
-                populate_deck();
-            }
+            checkDeck();
             Card c = deck.getCard();
             p.setCard_in_hand(c);
         }
@@ -117,6 +113,8 @@ public class Main {
 
                     if(dealer.getValue(dealer.getCards_in_hand()) == 21
                             && player.getValue(player.getCards_in_hand()) == 21){
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
                         System.out.println("Its a draw!");
                         player.setBalance(player.getBalance() + bet);
                         player.removeCards();
@@ -124,12 +122,16 @@ public class Main {
                         break;
                     }
                     if(dealer.getValue(dealer.getCards_in_hand()) == 21){
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
                         System.out.println("Dealer wins!");
                         player.removeCards();
                         dealer.removeCards();
                         break;
                     }
                     if(player.getValue(player.getCards_in_hand()) == 21){
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
                         System.out.println("You win!");
                         player.setBalance(player.getBalance() + bet +(bet * 1.5));
                         player.removeCards();
@@ -190,7 +192,6 @@ public class Main {
                             break;
                         }
                     }
-
                     if(dealer.getValue(dealer.getCards_in_hand()) > 21){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
@@ -209,6 +210,7 @@ public class Main {
                         player.setBalance(player.getBalance() + bet);
                         player.removeCards();
                         dealer.removeCards();
+                        break;
                     }
                     if(dealer.getValue(dealer.getCards_in_hand()) > player.getValue(player.getCards_in_hand())){
                         System.out.println("Dealers cards: " + dealer.toString());
@@ -216,6 +218,7 @@ public class Main {
                         System.out.println("Dealer wins");
                         player.removeCards();
                         dealer.removeCards();
+                        break;
                     }
                     else{
                         System.out.println("Dealers cards: " + dealer.toString());
@@ -226,7 +229,6 @@ public class Main {
                         dealer.removeCards();
                     }
                     break;
-
                 }
             }
         }while (choice != 2);
