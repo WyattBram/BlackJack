@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class Main {
 
@@ -23,7 +24,7 @@ public class Main {
         }
         return a;
     }
-
+    //need to use this function
     public static void checkDeck(){
         if(deck.getCards().isEmpty()){
             populate_deck();
@@ -57,7 +58,7 @@ public class Main {
     Scanner x = new Scanner(System.in);
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         int choice;
         populate_deck();
 
@@ -73,7 +74,6 @@ public class Main {
 
 
             if (choice == 1){
-                Boolean win = false;
 
                 while (true){
                     Double bet = 0.;
@@ -85,7 +85,7 @@ public class Main {
                         System.out.println("Your current balance is " + player.getBalance());
                         int gotBet = 0;
                         do{
-                            System.out.println("How much would you like to bet");
+                            System.out.println("How much would you like to bet:");
                             bet = x.nextDouble();
                             x.nextLine();
                             if(bet > player.getBalance() || bet <= 0){
@@ -98,12 +98,22 @@ public class Main {
 
                         }while (gotBet == 0);
                     }
-                    System.out.println("You bet " + bet + "\n" + "Your new balance is: " + player.getBalance());
+                    System.out.println("You bet " + bet + "\n" + "Your new balance is: " + player.getBalance() +
+                            "\n-------------------");
 
                     addToDealer(2, dealer);
-                    System.out.println("Dealers cards: " + dealer.toString());
+                    System.out.println("Dealers cards: " + dealer.toStringFirst());
                     addToPlayer(2, player);
                     System.out.println("Players cards: " + player.toString());
+                    System.out.println("-------------------");
+
+
+                    if(player.getValue(player.getCards_in_hand()) == 22){
+                        player.changeAce(player.getCards_in_hand());
+                    }
+                    if(dealer.getValue(dealer.getCards_in_hand()) == 22){
+                        dealer.changeAce(dealer.getCards_in_hand());
+                    }
 
                     if(dealer.getValue(dealer.getCards_in_hand()) == 21
                             && player.getValue(player.getCards_in_hand()) == 21){
@@ -135,22 +145,21 @@ public class Main {
 
 
                     while (true){
-                        System.out.println("Would you like to hit or stand (Please type \"hit\" or \"stay\")");
+                        System.out.println("Would you like to hit or stand (Please type \"hit\" or \"stand\")");
                         String hitOrStay = x.nextLine();
                         if (Objects.equals(hitOrStay, "hit")){
                             addToPlayer(1, player);
                             System.out.println("Players cards: " + player.toString());
-                            if(player.getValue(player.getCards_in_hand()) > 21 &&
-                                player.getCards_in_hand().contains(){
-                                System.out.println("You Busted!");
-                                break;
+                            // here shall lay the death of me inside the function below
+                            if(player.getValue(player.getCards_in_hand()) > 21){
+                                if(!player.changeAce(player.getCards_in_hand())){
+                                    System.out.println("You Busted!");
+                                    break;
+                                }
                             }
                         }
                         else if(Objects.equals(hitOrStay, "stand")){
                             break;
-                        }
-                        else{
-                            System.out.println("Please enter hit or stand");
                         }
 
                     }
@@ -159,23 +168,67 @@ public class Main {
                         dealer.removeCards();
                         break;
                     }
+// double aces acception
+                    System.out.println("Dealers cards: " + dealer.toString());
+                    System.out.println("----------------------");
+                    TimeUnit.SECONDS.sleep(1);
+                    while(true){
+                        if (dealer.getValue(dealer.getCards_in_hand()) < 17){
+                            addToDealer(1,dealer);
+                            TimeUnit.SECONDS.sleep(1);
+                            System.out.println("----------------------");
+                            System.out.println("Dealers cards: " + dealer.toString());
+                            System.out.println("----------------------");
+
+                            if(dealer.getValue(dealer.getCards_in_hand()) > 21){
+                                if(!dealer.changeAce(dealer.getCards_in_hand())){
+                                    break;
+                                }
+                            }
+                        }
+                        else{
+                            break;
+                        }
+                    }
+
+                    if(dealer.getValue(dealer.getCards_in_hand()) > 21){
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
+                        System.out.println("Dealer busted");
+                        player.setBalance(player.getBalance() + (bet*2));
+                        player.removeCards();
+                        dealer.removeCards();
+                        break;
+                    }
+
+
+                    if(dealer.getValue(dealer.getCards_in_hand()) == player.getValue(player.getCards_in_hand())){
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
+                        System.out.println("Push!");
+                        player.setBalance(player.getBalance() + bet);
+                        player.removeCards();
+                        dealer.removeCards();
+                    }
+                    if(dealer.getValue(dealer.getCards_in_hand()) > player.getValue(player.getCards_in_hand())){
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
+                        System.out.println("Dealer wins");
+                        player.removeCards();
+                        dealer.removeCards();
+                    }
+                    else{
+                        System.out.println("Dealers cards: " + dealer.toString());
+                        System.out.println("Your cards: " + player.toString());
+                        System.out.println("You win");
+                        player.setBalance(player.getBalance() + (bet*2));
+                        player.removeCards();
+                        dealer.removeCards();
+                    }
                     break;
 
                 }
-
-
-
-
-
-
-
-
             }
-
-
         }while (choice != 2);
-
-
-
     }
 }
