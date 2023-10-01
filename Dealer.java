@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+
+
 public class Dealer {
     private ArrayList<Card> cards_in_hand;
 
@@ -14,10 +16,6 @@ public class Dealer {
         cards_in_hand.clear();
     }
 
-    public void setCard_in_hand(ArrayList<Card> cards_in_hand) {
-        this.cards_in_hand = cards_in_hand;
-    }
-
     public void setCards_in_hand(Card c) {
         this.cards_in_hand.add(c);
     }
@@ -28,6 +26,22 @@ public class Dealer {
             total += cards_in_hand.get(i).getValue();
         }
         return total;
+    }
+
+    public Boolean changeAce(ArrayList<Card> c){
+        for(int i = 0; i< cards_in_hand.size(); i++){
+            if(c.get(i).getValue() == 11) {
+                c.get(i).setValue(1);
+                return true;
+            }
+
+        }
+        return false;
+    }
+
+
+    public String toStringFirst(){
+        return cards_in_hand.get(0).getFace() + " ?";
     }
 
     @Override
