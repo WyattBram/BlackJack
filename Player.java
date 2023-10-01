@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Player {
     private Double balance;
@@ -13,10 +12,6 @@ public class Player {
 
     public ArrayList<Card> getCards_in_hand() {
         return cards_in_hand;
-    }
-
-    public void setCards_in_hand(ArrayList<Card> cards_in_hand) {
-        this.cards_in_hand = cards_in_hand;
     }
 
     public void removeCards(){
@@ -35,14 +30,15 @@ public class Player {
         this.cards_in_hand.add(c);
     }
 
-    public void changeAce(ArrayList<Card> c){
+    public Boolean changeAce(ArrayList<Card> c){
         for(int i = 0; i< cards_in_hand.size(); i++){
-            if(Objects.equals(c.get(i).getFace(), "A")) {
+            if(c.get(i).getValue() == 11) {
                 c.get(i).setValue(1);
-                break;
+                return true;
             }
 
         }
+        return false;
     }
 
     public int getValue(ArrayList<Card> c){
