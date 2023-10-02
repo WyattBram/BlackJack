@@ -36,7 +36,7 @@ public class Main {
         for(int j = 0; j<i; j++){
             checkDeck();
             Card c = deck.getCard();
-            d.setCards_in_hand(c);
+            d.setCard_in_hand(c);
         }
     }
 
