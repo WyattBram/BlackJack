@@ -16,12 +16,4 @@ public class Player extends Person {
     public void setBalance(Double balance) {
         this.balance = balance;
     }
-
-    public int getValue(ArrayList<Card> c){
-        int total = 0;
-        for(int i = 0; i< cards_in_hand.size(); i++){
-            total += cards_in_hand.get(i).getValue();
-        }
-        return total;
-    }
 }

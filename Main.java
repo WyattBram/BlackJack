@@ -1,14 +1,12 @@
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-
+    //initiates the player and dealer
     static Player player = new Player(500.);
     static Dealer dealer = new Dealer();
-    Random rand = new Random();
 
     //populates the deck with 6 decks of cards
     //which is the amount used in most casinos
@@ -31,6 +29,8 @@ public class Main {
         }
     }
 
+
+    //  adds a certain amount of cards to dealers cards in hand
     public static void addToDealer(int i, Dealer d){
 
         for(int j = 0; j<i; j++){
@@ -40,6 +40,8 @@ public class Main {
         }
     }
 
+
+    //  adds a certain amount of cards to players cards in hand
     public static void addToPlayer(int i, Player p){
 
         for(int j = 0; j<i; j++){
@@ -49,9 +51,13 @@ public class Main {
         }
     }
 
+
+    //initiates a deck with the populate deck function
     static Deck deck = new Deck(populate_deck());
 
-    Scanner x = new Scanner(System.in);
+    //initiates scanner
+    static Scanner x = new Scanner(System.in);
+
 
 
     public static void main(String[] args) throws InterruptedException {
@@ -64,7 +70,7 @@ public class Main {
                     "1. Play a hand\n" +
                             "2. Quit");
 
-            Scanner x = new Scanner (System.in);
+
             choice = x.nextInt();
             x.nextLine();
 
@@ -104,15 +110,15 @@ public class Main {
                     System.out.println("-------------------");
 
 
-                    if(player.getValue(player.getCards_in_hand()) == 22){
+                    if(player.getValue() == 22){
                         player.changeAce(player.getCards_in_hand());
                     }
-                    if(dealer.getValue(dealer.getCards_in_hand()) == 22){
+                    if(dealer.getValue() == 22){
                         dealer.changeAce(dealer.getCards_in_hand());
                     }
 
-                    if(dealer.getValue(dealer.getCards_in_hand()) == 21
-                            && player.getValue(player.getCards_in_hand()) == 21){
+                    if(dealer.getValue() == 21
+                            && player.getValue() == 21){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
                         System.out.println("Its a draw!");
@@ -121,7 +127,7 @@ public class Main {
                         dealer.removeCards();
                         break;
                     }
-                    if(dealer.getValue(dealer.getCards_in_hand()) == 21){
+                    if(dealer.getValue() == 21){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
                         System.out.println("Dealer wins!");
@@ -129,7 +135,7 @@ public class Main {
                         dealer.removeCards();
                         break;
                     }
-                    if(player.getValue(player.getCards_in_hand()) == 21){
+                    if(player.getValue() == 21){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
                         System.out.println("You win!");
@@ -138,13 +144,6 @@ public class Main {
                         dealer.removeCards();
                         break;
                     }
-                    /*else {
-                        player.removeCards();
-                        dealer.removeCards();
-                        break;
-
-                    }*/
-
 
                     while (true){
                         System.out.println("Would you like to hit or stand (Please type \"hit\" or \"stand\")");
@@ -152,8 +151,7 @@ public class Main {
                         if (Objects.equals(hitOrStay, "hit")){
                             addToPlayer(1, player);
                             System.out.println("Players cards: " + player.toString());
-                            // here shall lay the death of me inside the function below
-                            if(player.getValue(player.getCards_in_hand()) > 21){
+                            if(player.getValue() > 21){
                                 if(!player.changeAce(player.getCards_in_hand())){
                                     System.out.println("You Busted!");
                                     break;
@@ -165,24 +163,24 @@ public class Main {
                         }
 
                     }
-                    if(player.getValue(player.getCards_in_hand()) > 21){
+                    if(player.getValue() > 21){
                         player.removeCards();
                         dealer.removeCards();
                         break;
                     }
-// double aces acception
+
                     System.out.println("Dealers cards: " + dealer.toString());
                     System.out.println("----------------------");
                     TimeUnit.SECONDS.sleep(1);
                     while(true){
-                        if (dealer.getValue(dealer.getCards_in_hand()) < 17){
+                        if (dealer.getValue() < 17){
                             addToDealer(1,dealer);
                             TimeUnit.SECONDS.sleep(1);
                             System.out.println("----------------------");
                             System.out.println("Dealers cards: " + dealer.toString());
                             System.out.println("----------------------");
 
-                            if(dealer.getValue(dealer.getCards_in_hand()) > 21){
+                            if(dealer.getValue() > 21){
                                 if(!dealer.changeAce(dealer.getCards_in_hand())){
                                     break;
                                 }
@@ -192,7 +190,7 @@ public class Main {
                             break;
                         }
                     }
-                    if(dealer.getValue(dealer.getCards_in_hand()) > 21){
+                    if(dealer.getValue() > 21){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
                         System.out.println("Dealer busted");
@@ -203,7 +201,7 @@ public class Main {
                     }
 
 
-                    if(dealer.getValue(dealer.getCards_in_hand()) == player.getValue(player.getCards_in_hand())){
+                    if(dealer.getValue() == player.getValue()){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
                         System.out.println("Push!");
@@ -212,7 +210,7 @@ public class Main {
                         dealer.removeCards();
                         break;
                     }
-                    if(dealer.getValue(dealer.getCards_in_hand()) > player.getValue(player.getCards_in_hand())){
+                    if(dealer.getValue() > player.getValue()){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
                         System.out.println("Dealer wins");

@@ -14,6 +14,15 @@ public abstract class Person {
         }
         return false;
     }
+
+    public int getValue(){
+        int total = 0;
+        for(int i = 0; i< cards_in_hand.size(); i++){
+            total += cards_in_hand.get(i).getValue();
+        }
+        return total;
+    }
+
     public void setCard_in_hand(Card c) {
         this.cards_in_hand.add(c);
     }
