@@ -1,6 +1,6 @@
 public class Card {
     //face is what is shown on the card
-    private String face;
+    private final String face;
     //value is the amount that card is worth
     private int value;
 
@@ -10,6 +10,8 @@ public class Card {
         this.value = v;
     }
 
+
+    //simple getters and setters
     public int getValue() {
         return value;
     }

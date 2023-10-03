@@ -9,6 +9,8 @@ public class Player extends Person {
         cards_in_hand = new ArrayList<Card>();
     }
 
+
+    //Simple getters and setters
     public Double getBalance() {
         return balance;
     }
