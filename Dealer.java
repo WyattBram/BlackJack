@@ -8,6 +8,7 @@ public class Dealer extends Person{
         this.cards_in_hand = new ArrayList<Card>();
     }
 
+    //Returns the first card in the dealers hand for initial showcase of dealers cards
     public String toStringFirst(){
         return cards_in_hand.get(0).getFace() + " ?";
     }

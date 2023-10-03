@@ -61,8 +61,10 @@ public class Main {
 
 
     public static void main(String[] args) throws InterruptedException {
+        //Initiates choice for the while loop and populates the deck
         int choice;
         populate_deck();
+
 
         do{
 
@@ -77,7 +79,9 @@ public class Main {
 
             if (choice == 1){
 
+
                 while (true){
+                    //Gets the bet for the player and makes sure the player has the balance that they bet
                     Double bet = 0.;
                     if (player.getBalance() <= 0){
                         System.out.println("Your have lost!");
@@ -100,6 +104,8 @@ public class Main {
 
                         }while (gotBet == 0);
                     }
+
+                    //Prints bet and displayes the players and dealers card(s)
                     System.out.println("You bet " + bet + "\n" + "Your new balance is: " + player.getBalance() +
                             "\n-------------------");
 
@@ -109,7 +115,7 @@ public class Main {
                     System.out.println("Players cards: " + player.toString());
                     System.out.println("-------------------");
 
-
+                    //Checks for a double ace and changes one of the aces to 1
                     if(player.getValue() == 22){
                         player.changeAce(player.getCards_in_hand());
                     }
@@ -117,6 +123,7 @@ public class Main {
                         dealer.changeAce(dealer.getCards_in_hand());
                     }
 
+                    //Makes sure that the player, dealer, or both didn't get blackjack
                     if(dealer.getValue() == 21
                             && player.getValue() == 21){
                         System.out.println("Dealers cards: " + dealer.toString());
@@ -145,6 +152,8 @@ public class Main {
                         break;
                     }
 
+
+                    // Allows the player to stand or hit as much as they are able to
                     while (true){
                         System.out.println("Would you like to hit or stand (Please type \"hit\" or \"stand\")");
                         String hitOrStay = x.nextLine();
@@ -163,12 +172,14 @@ public class Main {
                         }
 
                     }
+                    //Makes sure the player didn't bust
                     if(player.getValue() > 21){
                         player.removeCards();
                         dealer.removeCards();
                         break;
                     }
 
+                    //Prints the dealer and players cards and makes the dealer hit till they have <= 17
                     System.out.println("Dealers cards: " + dealer.toString());
                     System.out.println("----------------------");
                     TimeUnit.SECONDS.sleep(1);
@@ -190,6 +201,8 @@ public class Main {
                             break;
                         }
                     }
+
+                    //Checks to see who won the game
                     if(dealer.getValue() > 21){
                         System.out.println("Dealers cards: " + dealer.toString());
                         System.out.println("Your cards: " + player.toString());
